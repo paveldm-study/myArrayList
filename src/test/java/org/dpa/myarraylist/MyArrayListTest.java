@@ -9,12 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Тестирование методов класса MyArrayList.
  */
 public class MyArrayListTest {
-    private MyArrayList<String> arrayList;
+    private MyArrayList<String> arrayList = new MyArrayList<>();
 
-    @BeforeEach
-    public void setUp() {
-        arrayList = new MyArrayList<>();
-    }
 
     @Test
     public void testAdd() {
@@ -65,7 +61,7 @@ public class MyArrayListTest {
         arrayList.clear();
 
         assertEquals(0, arrayList.size);
-        assertEquals(10, arrayList.getDEFAULT_CAPACITY());
+        assertEquals(10, arrayList.getDEFAULT_CAPACITY()); // если ассертов несколько то пихай их в assertAll
     }
 
     @Test

@@ -1,7 +1,10 @@
 package org.dpa.myarraylist;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -14,8 +17,9 @@ import java.util.NoSuchElementException;
 
 public class MyArrayList<T extends Comparable<T>> implements Iterable<T> {
 
+    public static final String ERR_MSG = "illegal capacity";
     private Object[] array;
-    private final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 10;
     int size = 0;
 
 //   Конструкторы:
@@ -32,7 +36,7 @@ public class MyArrayList<T extends Comparable<T>> implements Iterable<T> {
      */
     public MyArrayList(int initialCapacity) {
         if (initialCapacity < 0) {
-            System.out.println("illegal capacity"); // exept.
+            System.out.println(ERR_MSG); // exept. выносим строки в константы
         } else {
             this.array = new Object[initialCapacity];
         }
@@ -98,20 +102,9 @@ public class MyArrayList<T extends Comparable<T>> implements Iterable<T> {
      */
     @Override
     public String toString() {
-        if (size == 0) {
-            return "[]";
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append("[");
-            for (int i = 0; i < size; i++) {
-                sb.append(array[i]);
-                if (i < size - 1) {
-                    sb.append(", ");
-                }
-            }
-            sb.append("]");
-            return sb.toString();
-        }
+        return Arrays.stream(array)
+                .map(Objects::toString)
+                .collect(Collectors.joining(", ", "[", "]"));
     }
 
     /**
@@ -128,13 +121,6 @@ public class MyArrayList<T extends Comparable<T>> implements Iterable<T> {
         mergeSorting(array, 0, array.length - 1);
     }
 
-//  Служебные методы
-    /**
-     * Получение значения ёмкости
-     */
-    public int getDEFAULT_CAPACITY() {
-        return DEFAULT_CAPACITY;
-    }
 
     /**
      * Увеличение ёмкости
@@ -181,7 +167,6 @@ public class MyArrayList<T extends Comparable<T>> implements Iterable<T> {
 
         int k = left;
         while (i < n1 && j < n2) {
-//            if (((Comparable) leftArray[i]).compareTo(rightArray[j]) <= 0) {
             if ((compare(leftArray[i], rightArray[j]) <= 0)) {
                 array[k] = leftArray[i];
                 i++;
